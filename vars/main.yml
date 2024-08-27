@@ -1,4 +1,13 @@
 checks:
+  unquoted:
+    enabled: true
+
+  dns_rec:
+    enabled: true
+
+  certfile:
+    enabled: true
+
   netstat:
     - name: MMS_Serveur_P102
       state: "ESTABLISHED"
@@ -16,9 +25,3 @@ checks:
         port: 4767
       passerelles:
         - ip: "127.0.0.1"
-
-  check_unquoted:
-    enabled: true
-
-  check_dns_rec:
-    enabled: true
