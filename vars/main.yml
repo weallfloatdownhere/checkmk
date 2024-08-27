@@ -1,11 +1,8 @@
 checks:
-  unquoted:
+  certfile:
     enabled: true
 
   dns_rec:
-    enabled: true
-
-  certfile:
     enabled: true
 
   netstat:
@@ -25,3 +22,15 @@ checks:
         port: 4767
       passerelles:
         - ip: "127.0.0.1"
+
+  ntp_source:
+    enabled: true
+
+  timezone:
+    enabled: true
+
+  unquoted_svc:
+    enabled: true
+
+  windows_release:
+    enabled: true

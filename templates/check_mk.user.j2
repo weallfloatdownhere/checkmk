@@ -1,11 +1,24 @@
 mrpe:
     config:
-{%- for line in checks['netstat'] %}
-        - check = {{ line['name'] }} c:\windows\system32\CSCRIPT.exe //NOLOGO //D //T:5 C:\ProgramData\checkmk\agent\plugins\check_netstat.vbs {{ line['state'] }} {{ line['origin']['ip'] }} {{ line['origin']['port'] }}{% for pass in line['passerelles'] %} {{pass['ip']}} {% endfor -%}
-{% endfor %}
-{%- if checks['unquoted']['enabled'] %}
-        - check = Unquoted_SvcPath c:\windows\system32\CSCRIPT.exe //NOLOGO //D //T:5 C:\ProgramData\checkmk\agent\plugins\check_unquoted.vbs
+{%- if checks['certfile']['enabled'] %}
+        - check = Cert_Life c:\windows\system32\CSCRIPT.exe //NOLOGO //D //T:5 C:\ProgramData\checkmk\agent\plugins\check_certlife.vbs "-store -v my" 30 7
 {%- endif %}
 {%- if checks['dns_rec']['enabled'] %}
         - check = DNS_Records c:\windows\system32\CSCRIPT.exe //NOLOGO //D //T:5 C:\ProgramData\checkmk\agent\plugins\check_dns_rec.vbs
+{%- endif %}
+{%- for line in checks['netstat'] %}
+        - check = {{ line['name'] }} c:\windows\system32\CSCRIPT.exe //NOLOGO //D //T:5 C:\ProgramData\checkmk\agent\plugins\check_netstat.vbs {{ line['state'] }} {{ line['origin']['ip'] }} {{ line['origin']['port'] }}{% for pass in line['passerelles'] %} {{pass['ip']}} {% endfor -%}
+{% endfor %}
+{%- if checks['unquoted_svc']['enabled'] %}
+        - check = Unquoted_SvcPath c:\windows\system32\CSCRIPT.exe //NOLOGO //D //T:5 C:\ProgramData\checkmk\agent\plugins\check_unquoted.vbs
+{%- endif %}
+{%- if checks['ntp_source']['enabled'] %}
+        - check = ntp_source c:\windows\system32\WindowsPowerShell\v1.0\Powershell.exe -ep bypass -command exit 0
+{%- endif %}
+
+{%- if checks['timezone']['enabled'] %}
+        - check = Fuseau_Horaire c:\windows\system32\CMD.exe /C C:\ProgramData\checkmk\agent\plugins\check_timezone.cmd
+{%- endif %}
+{%- if checks['windows_release']['enabled'] %}
+        - check = @Windows_Version c:\windows\system32\WindowsPowerShell\v1.0\Powershell.exe -ep bypass -command :\ProgramData\checkmk\agent\plugins\check_Windows_OS_release.ps1
 {%- endif %}
