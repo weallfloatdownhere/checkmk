@@ -31,11 +31,7 @@ Function CheckNetstat(check_state, check_origin_ip, check_origin_port, check_pas
 	End if
 	
 	rem Show parameters
-	wscript.Echo "STATE        : " & check_state
-	wscript.Echo "ORIGIN IP    : " & check_origin_ip
-	wscript.Echo "ORIGIN PORT  : " & check_origin_port
-	wscript.Echo "PASSERELLE " & check_passerelle_nmbr & " : " & check_passerelle
-	wscript.Echo vbCrLf & "-------------------------------" & vbCrLf
+	wscript.Echo "STATE        : " & check_state & vbCrLf & "ORIGIN IP    : " & check_origin_ip & vbCrLf & "ORIGIN PORT  : " & check_origin_port & vbCrLf & "PASSERELLE " & check_passerelle_nmbr & " : " & check_passerelle & vbCrLf & "-------------------------------" & vbCrLf
 End Function
 
 rem MAIN FUNCTION
@@ -48,21 +44,17 @@ Function Main()
 	origin_ip   = args.item(1)
 	origin_port = args.item(2)
 
-	rem PASSERELLE Array declaration
-	array_pass = Array()
-
 	rem CREATE PASSERELLES ARRAY
-	For i = 3 to args.count -1
-	  array_pass = AddItem(array_pass, args.item(i))
-	Next
+	if args.count > 3 then
+		cnt_pass = 1
+		For i = 3 to args.count -1
+		  Call CheckNetstat(state, origin_ip, origin_port, args.item(i), cnt_pass)
+		  cnt_pass = cnt_pass + 1 
+		Next
+	ElseIf args.count = 3 then
+		Call CheckNetstat(state, origin_ip, origin_port, args.item(i), 0)
+	End if
 
-	rem PRINT PASSERELLE ARRAY
-	passerelle_nmbr = 1
-	For i = 0 to ubound(array_pass)
-	  Call CheckNetstat(state, origin_ip, origin_port, array_pass(i), passerelle_nmbr)
-	  passerelle_nmbr = passerelle_nmbr + 1 
-	Next
-	
 	rem Show the test(s) result returned code
 	wscript.Echo "RETURN CODE  : " & test_retcode
 	
