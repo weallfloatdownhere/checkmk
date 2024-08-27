@@ -1,8 +1,11 @@
 checks:
-  check_unquoted:
+  unquoted:
     enabled: true
 
-  check_dns_rec:
+  dns_rec:
+    enabled: true
+
+  certfile:
     enabled: true
 
   netstat:
@@ -14,6 +17,7 @@ checks:
       passerelles:
         - ip: "66.130.90.82"
         - ip: "66.130.90.83"
+
     - name: MMS_Comtrade
       state: "ESTABLISHED"
       origin:

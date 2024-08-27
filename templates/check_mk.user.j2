@@ -3,9 +3,9 @@ mrpe:
 {%- for line in checks['netstat'] %}
         - check = {{ line['name'] }} c:\windows\system32\CSCRIPT.exe //NOLOGO //D //T:5 C:\ProgramData\checkmk\agent\plugins\check_netstat.vbs {{ line['state'] }} {{ line['origin']['ip'] }} {{ line['origin']['port'] }}{% for pass in line['passerelles'] %} {{pass['ip']}} {% endfor -%}
 {% endfor %}
-{%- if checks['check_unquoted']['enabled'] %}
+{%- if checks['unquoted']['enabled'] %}
         - check = Unquoted_SvcPath c:\windows\system32\CSCRIPT.exe //NOLOGO //D //T:5 C:\ProgramData\checkmk\agent\plugins\check_unquoted.vbs
 {%- endif %}
-{%- if checks['check_dns_rec']['enabled'] %}
+{%- if checks['dns_rec']['enabled'] %}
         - check = DNS_Records c:\windows\system32\CSCRIPT.exe //NOLOGO //D //T:5 C:\ProgramData\checkmk\agent\plugins\check_dns_rec.vbs
 {%- endif %}
