@@ -1,0 +1,24 @@
+checks:
+  netstat:
+    - name: MMS_Serveur_P102
+      state: "ESTABLISHED"
+      origin:
+        ip: "10.0.0.36"
+        port: 102
+      passerelles:
+        - ip: "66.130.90.82"
+        - ip: "66.130.90.83"
+
+    - name: MMS_Comtrade
+      state: "ESTABLISHED"
+      origin:
+        ip: "127.0.0.1"
+        port: 4767
+      passerelles:
+        - ip: "127.0.0.1"
+
+  check_unquoted:
+    enabled: true
+
+  check_dns_rec:
+    enabled: true
