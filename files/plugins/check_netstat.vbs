@@ -67,7 +67,6 @@ Function Main()
 	wscript.Echo "RETURN CODE  : " & test_retcode
 	
 	Call Wscript.Quit(test_retcode)
-
 End Function
 
 rem EXECUTE Main Function
